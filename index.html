@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday Shamala 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Segoe UI", cursive;
+    overflow: hidden;
+    text-align: center;
+    color: #d6336c;
+  }
+
+  /* === Background Slideshow === */
+  .bg {
+    position: fixed;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease;
+    z-index: -2;
+  }
+
+  .bg.active {
+    opacity: 0.6;
+  }
+
+  /* === Password Screen === */
+  #lock {
+    position: fixed;
+    inset: 0;
+    background: #111827;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 10px;
+  }
+
+  button {
+    margin-top: 10px;
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: none;
+    background: #ff4d88;
+    color: white;
+    cursor: pointer;
+  }
+
+  /* === Main Content === */
+  h1 {
+    margin-top: 40px;
+    font-size: 2.6em;
+  }
+
+  #cake {
+    font-size: 100px;
+    cursor: pointer;
+    animation: float 3s infinite;
+  }
+
+  @keyframes float {
+    50% { transform: translateY(-10px); }
+  }
+
+  #cutMessage {
+    display: none;
+    max-width: 500px;
+    margin: auto;
+    background: #fff0f5;
+    padding: 20px;
+    border-radius: 20px;
+    animation: fadeIn 2s forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .heart {
+    position: fixed;
+    top: -20px;
+    font-size: 22px;
+    animation: fall 6s linear infinite;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh); opacity: 0; }
+  }
+
+  .teddy {
+    position: fixed;
+    top: 10px;
+    font-size: 40px;
+    animation: bounce 2s infinite;
+  }
+
+  .left { left: 10px; }
+  .right { right: 10px; }
+
+  @keyframes bounce {
+    50% { transform: translateY(-5px); }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Password Lock -->
+<div id="lock">
+  <h2>🔐 A surprise for you 💗</h2>
+  <p>Enter the secret password</p>
+  <input type="password" id="pwd" placeholder="Password"/>
+  <button onclick="unlock()">Unlock 🎁</button>
+  <p id="error" style="color:#fca5a5;"></p>
+</div>
+
+<!-- Backgrounds -->
+<div class="bg" style="background-image:url('photos/pic1.jpg')"></div>
+<div class="bg" style="background-image:url('photos/pic2.jpg')"></div>
+<div class="bg" style="background-image:url('photos/pic3.jpg')"></div>
+<div class="bg" style="background-image:url('photos/pic4.jpg')"></div>
+
+<div class="teddy left">🧸</div>
+<div class="teddy right">🧸</div>
+
+<h1>Happy Birthday Shamala 🎉</h1>
+<p>Tap the cake 🎂</p>
+
+<div id="cake">🎂</div>
+
+<p id="cutMessage">
+  Dear Shamuuu, Rajiii, Lakshmiii and my Peetha 💕<br><br>
+  Wishing you a happy happy birthday!<br>
+  Thank you for all the beautiful memories.<br>
+  I hope our bond lasts forever 💖<br><br>
+  <strong>Your Royyyy</strong>
+</p>
+
+<!-- Voice Note -->
+<audio id="voice" controls style="margin-top:15px; display:none;">
+  audio/voice.mp3
+</audio>
+
+<script>
+  /* === PASSWORD === */
+  function unlock() {
+    const pass = document.getElementById("pwd").value;
+    if (pass === "09042002") { // CHANGE PASSWORD HERE
+      document.getElementById("lock").style.display = "none";
+      startSlideshow();
+    } else {
+      document.getElementById("error").textContent = "Wrong password 💔";
+    }
+  }
+
+  /* === SLIDESHOW === */
+  const slides = document.querySelectorAll('.bg');
+  let i = 0;
+
+  function startSlideshow() {
+    slides[0].classList.add("active");
+    setInterval(() => {
+      slides[i].classList.remove("active");
+      i = (i + 1) % slides.length;
+      slides[i].classList.add("active");
+    }, 6000);
+  }
+
+  /* === CAKE === */
+  document.getElementById("cake").onclick = () => {
+    document.getElementById("cutMessage").style.display = "block";
+    document.getElementById("voice").style.display = "block";
+  };
+
+  /* === HEARTS === */
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.textContent = "💗";
+    h.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }, 350);
+</script>
+
+</body>
+</html>
