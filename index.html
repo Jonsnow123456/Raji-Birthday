@@ -14,7 +14,7 @@
     color: white;
   }
 
-  /* ===== PASSWORD SCREEN ===== */
+  /* ===== PASSWORD ===== */
   #lock {
     position: fixed;
     inset: 0;
@@ -31,7 +31,7 @@
     border-radius: 10px;
     border: none;
     margin-top: 10px;
-    outline: none;
+    font-size: 16px;
   }
 
   #lock button {
@@ -53,14 +53,18 @@
     transition: opacity 2s ease;
     background-size: cover;
     background-position: center;
-    animation: zoomOut 8s ease-out forwards;
   }
 
   .slide.active {
     opacity: 1;
+    animation: zoomOut 6s ease-out;
   }
 
-  /* ===== BLURRED BACKGROUND LAYER ===== */
+  @keyframes zoomOut {
+    from { transform: scale(1.06); }
+    to   { transform: scale(1); }
+  }
+
   .slide::before {
     content: "";
     position: absolute;
@@ -71,32 +75,23 @@
     filter: blur(22px);
     transform: scale(1.18);
     opacity: 0.38;
-    z-index: 0;
   }
 
-  /* ===== CENTER PHOTO ===== */
   .photo {
     position: absolute;
     inset: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 1;
+    align-items: center;
   }
 
   .photo img {
-    max-height: 88vh;
     max-width: 92vw;
+    max-height: 88vh;
     object-fit: contain;
     filter: drop-shadow(0 22px 45px rgba(0,0,0,0.55));
   }
 
-  @keyframes zoomOut {
-    from { transform: scale(1.06); }
-    to   { transform: scale(1); }
-  }
-
-  /* ===== HEADER ===== */
   h1 {
     position: fixed;
     top: 24px;
@@ -114,59 +109,44 @@
     text-align: center;
     font-size: 90px;
     cursor: pointer;
-    animation: float 3s infinite;
     z-index: 10;
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
 
-  @keyframes float {
-    50% { transform: translateY(-12px); }
-  }
-
-  /* Fade out cake */
   .fade-out {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-12px);
     pointer-events: none;
   }
 
-  /* ===== SPARKLES ===== */
-  .sparkle {
-    position: fixed;
-    font-size: 14px;
-    color: #ffd700;
-    pointer-events: none;
-    z-index: 20;
-    animation: sparkle-float 1s ease-out forwards;
-  }
-
-  @keyframes sparkle-float {
-    from {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-    to {
-      opacity: 0;
-      transform: translateY(-40px) scale(1.6);
-    }
-  }
-
-  /* ===== LETTER BUTTON ===== */
-  #openLetter {
+  #surpriseSong {
     display: none;
     position: fixed;
     bottom: 22px;
     right: 22px;
     background: #ff4d88;
+    color: white;
+    border: none;
+    border-radius: 22px;
+    padding: 12px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 20;
+  }
+
+  #openLetter {
+    display: none;
+    position: fixed;
+    bottom: 22px;
+    left: 22px;
+    background: #ff4d88;
     border-radius: 50%;
-    padding: 18px;
+    padding: 16px;
     font-size: 20px;
     cursor: pointer;
     z-index: 20;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
   }
 
-  /* ===== LETTER OVERLAY ===== */
   #letter {
     display: none;
     position: fixed;
@@ -183,7 +163,6 @@
     margin: 60px auto;
     padding: 28px;
     border-radius: 22px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
     line-height: 1.6;
     position: relative;
   }
@@ -192,23 +171,23 @@
     position: absolute;
     top: 10px;
     right: 14px;
-    background: none;
     border: none;
+    background: none;
     font-size: 22px;
     cursor: pointer;
   }
 
-  /* ===== HEARTS ===== */
-  .heart {
+  #finalLine {
+    display: none;
     position: fixed;
-    top: -20px;
-    font-size: 22px;
-    animation: fall 6s linear infinite;
-    z-index: 15;
-  }
-
-  @keyframes fall {
-    to { transform: translateY(110vh); opacity: 0; }
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 2s ease;
+    z-index: 500;
   }
 </style>
 </head>
@@ -219,7 +198,7 @@
 <div id="lock">
   <h2>🔐 A Surprise for You 💗</h2>
   <input id="pwd" type="password" placeholder="Password">
-  <button onclick="unlock()">Unlock 🎁</button>
+  <button type="button" onclick="unlock()">Unlock 🎁</button>
   <p id="error" style="color:#fca5a5;"></p>
 </div>
 
@@ -227,51 +206,37 @@
 <div id="cake">🎂</div>
 
 <!-- SLIDES -->
-<div class="slide active" style="background-image:url('photos/pic1.jpg')">
-  <div class="photo"><img src="photos/pic1.jpg"></div>
-</div>
-<div class="slide" style="background-image:url('photos/pic2.jpg')">
-  <div class="photo"><img src="photos/pic2.jpg"></div>
-</div>
-<div class="slide" style="background-image:url('photos/pic3.jpg')">
-  <div class="photo"><img src="photos/pic3.jpg"></div>
-</div>
-<div class="slide" style="background-image:url('photos/pic4.jpg')">
-  <div class="photo"><img src="photos/pic4.jpg"></div>
-</div>
-<div class="slide" style="background-image:url('photos/pic5.jpg')">
-  <div class="photo"><img src="photos/pic5.jpg"></div>
-</div>
-<div class="slide" style="background-image:url('photos/pic6.jpg')">
-  <div class="photo"><img src="photos/pic6.jpg"></div>
-</div>
-<div class="slide" style="background-image:url('photos/pic7.jpg')">
-  <div class="photo"><img src="photos/pic7.jpg"></div>
-</div>
-<div class="slide" style="background-image:url('photos/pic8.jpg')">
-  <div class="photo"><img src="photos/pic8.jpg"></div>
-</div>
-<div class="slide" style="background-image:url('photos/pic9.jpg')">
-  <div class="photo"><img src="photos/pic9.jpg"></div>
-</div>
+<div class="slide active" style="background-image:url('photos/pic1.jpg')"><div class="photo"><img src="photos/pic1.jpg"></div></div>
+<div class="slide" style="background-image:url('photos/pic2.jpg')"><div class="photo"><img src="photos/pic2.jpg"></div></div>
+<div class="slide" style="background-image:url('photos/pic3.jpg')"><div class="photo"><img src="photos/pic3.jpg"></div></div>
+<div class="slide" style="background-image:url('photos/pic4.jpg')"><div class="photo"><img src="photos/pic4.jpg"></div></div>
+<div class="slide" style="background-image:url('photos/pic5.jpg')"><div class="photo"><img src="photos/pic5.jpg"></div></div>
+<div class="slide" style="background-image:url('photos/pic6.jpg')"><div class="photo"><img src="photos/pic6.jpg"></div></div>
+<div class="slide" style="background-image:url('photos/pic7.jpg')"><div class="photo"><img src="photos/pic7.jpg"></div></div>
+<div class="slide" style="background-image:url('photos/pic8.jpg')"><div class="photo"><img src="photos/pic8.jpg"></div></div>
+<div class="slide" style="background-image:url('photos/pic9.jpg')"><div class="photo"><img src="photos/pic9.jpg"></div></div>
 
-<!-- LETTER -->
+<!-- BUTTONS -->
+<button id="surpriseSong">🎶 Surprise Song</button>
 <button id="openLetter" onclick="openLetter()">💌</button>
 
+<!-- LETTER -->
 <div id="letter">
   <div id="letterBox">
     <button onclick="closeLetter()">✖</button>
     <strong style="font-size:1.2em;">💖 A message just for you 💖</strong><br><br>
     Dear Shamuuu, Rajiii, Lakshmiii and my Peetha 💕<br><br>
-    Wishing you a happy happy birthday!  
-    Thank you for all the love and beautiful memories.  
+    Wishing you a happy happy birthday! Thank you for all the love and beautiful memories.
     I hope our bond lasts forever 💖<br><br>
     <strong>Your Pappu</strong>
   </div>
 </div>
 
-<!-- AUDIO -->
+<div id="finalLine">And I’d choose you again… every time.</div>
+
+<!-- ✅ AUDIO (CORRECT) -->
 <audio id="voice" src="audio/voice.mp3"></audio>
+<audio id="surprise" src="audio/surprise.mp3"></audio>
 
 <script>
   const slides = document.querySelectorAll(".slide");
@@ -282,7 +247,7 @@
       slides[index].classList.remove("active");
       index = (index + 1) % slides.length;
       slides[index].classList.add("active");
-    }, 8000);
+    }, 6000);
   }
 
   function unlock() {
@@ -294,48 +259,42 @@
     }
   }
 
-  function createSparkles(x, y) {
-    const emojis = ["✨", "💫", "⭐"];
-    for (let i = 0; i < 10; i++) {
-      const s = document.createElement("div");
-      s.className = "sparkle";
-      s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      s.style.left = x + (Math.random() - 0.5) * 60 + "px";
-      s.style.top = y + (Math.random() - 0.5) * 30 + "px";
-      document.body.appendChild(s);
-      setTimeout(() => s.remove(), 1000);
-    }
-  }
+  const cake = document.getElementById("cake");
+  const surpriseBtn = document.getElementById("surpriseSong");
+  const letterBtn = document.getElementById("openLetter");
+  const letter = document.getElementById("letter");
+  const finalLine = document.getElementById("finalLine");
+  const voice = document.getElementById("voice");
+  const surprise = document.getElementById("surprise");
 
-  document.getElementById("cake").onclick = () => {
-    const cake = document.getElementById("cake");
-
-    document.getElementById("openLetter").style.display = "block";
-    document.getElementById("voice").play();
-
-    const rect = cake.getBoundingClientRect();
-    createSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2);
-
+  cake.onclick = () => {
+    voice.currentTime = 0;
+    voice.play();
+    surpriseBtn.style.display = "block";
+    letterBtn.style.display = "block";
     cake.classList.add("fade-out");
     setTimeout(() => cake.style.display = "none", 800);
   };
 
+  surpriseBtn.onclick = () => {
+    voice.pause();
+    surprise.currentTime = 0;
+    surprise.play();
+  };
+
+  surprise.onended = () => {
+    openLetter();
+  };
+
   function openLetter() {
-    document.getElementById("letter").style.display = "block";
+    letter.style.display = "block";
   }
 
   function closeLetter() {
-    document.getElementById("letter").style.display = "none";
+    letter.style.display = "none";
+    finalLine.style.display = "flex";
+    setTimeout(() => finalLine.style.opacity = 1, 100);
   }
-
-  setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerText = "💗";
-    h.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 6000);
-  }, 350);
 </script>
 
 </body>
